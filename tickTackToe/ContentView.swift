@@ -10,8 +10,8 @@ import SwiftUI
 struct ContentView: View {
     
     @ObservedObject var clasicTicTacToe: threeByThreeGame
-    
-    @ViewBuilder func fieldTile (id: Int, content: String) -> some View {
+        
+    @ViewBuilder func fieldTile(id: Int, content: String) -> some View {
         
         ZStack {
             RoundedRectangle(cornerRadius: 10)
@@ -49,7 +49,17 @@ struct ContentView: View {
     var body: some View {
         VStack {
             
-            if xTurn {
+            if let win = clasicTicTacToe.win {
+                if win == ticTacToeGame.winStates.x {
+                    Text("X WINS!")
+                } else if win == ticTacToeGame.winStates.o {
+                    Text("O WINS!")
+                } else {
+                    Text("It's a DRAW!")
+                }
+                
+                
+            } else if xTurn {
                 Text("It is X turn")
             } else {
                 Text("It is O turn")

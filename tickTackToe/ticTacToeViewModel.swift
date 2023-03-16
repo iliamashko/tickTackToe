@@ -9,7 +9,7 @@ import SwiftUI
 
 class threeByThreeGame: ObservableObject {
     
-    @Published var ticTackToeModel = ticTacToeGame(winRowLength: 3, fieldBorderLength: 3)
+    @Published private(set) var ticTackToeModel = ticTacToeGame(winRowLength: 3, fieldBorderLength: 3)
     
     var xTurn: Bool {
         ticTackToeModel.xTurn
