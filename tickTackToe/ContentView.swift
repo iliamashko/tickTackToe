@@ -8,19 +8,69 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @ObservedObject var clasicTicTacToe: threeByThreeGame
+    
+    @ViewBuilder func fieldTile (id: Int, content: String) -> some View {
+        
+        ZStack {
+            RoundedRectangle(cornerRadius: 10)
+                .aspectRatio(1, contentMode: .fit)
+                .foregroundColor(.gray)
+            Text(content)
+                .font(.largeTitle)
+        }.onTapGesture {
+            clasicTicTacToe.chooseField(id)
+        }.padding(1)
+    }
+    
+    var xTurn: Bool {
+        clasicTicTacToe.xTurn
+    }
+    
+    var fieldRow: some View {
+        
+        LazyVGrid(columns: columns){
+            ForEach(clasicTicTacToe.fields, id: \.id) { item in
+                fieldTile(id: item.id, content: item.state)
+            }
+        }
+        
+    }
+    
+    var columns: [GridItem] {
+        var array: [GridItem] = []
+        for _ in 0..<Int(sqrt(Double(clasicTicTacToe.fields.count))) {
+            array.append(GridItem())
+        }
+        return array
+    }
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+            
+            if xTurn {
+                Text("It is X turn")
+            } else {
+                Text("It is O turn")
+            }
+            
+            Spacer()
+            
+            fieldRow
+            
+            Spacer()
+            
+            Button(action: {
+                clasicTicTacToe.newGame()
+            }, label: {Text("New game")})
         }
-        .padding()
     }
 }
-
+    
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        let game = threeByThreeGame()
+        ContentView(clasicTicTacToe: game)
     }
 }

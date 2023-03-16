@@ -8,10 +8,14 @@
 import SwiftUI
 
 @main
-struct tickTackToeApp: App {
+struct ticTacToeApp: App {
+    
+    
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            let game = threeByThreeGame()
+            ContentView(clasicTicTacToe: game)
         }
     }
 }
